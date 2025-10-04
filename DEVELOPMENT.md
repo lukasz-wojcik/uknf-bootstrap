@@ -70,3 +70,58 @@ npm run dev
 
 **Files Modified**:
 - `src/components/Layout.jsx` - Complete layout restructure with flexbox
+
+---
+
+### 5. Documentation - Development Log
+**Prompt**: Please create an md documentation file and add summary of the commands which were used to generate this page. Keep the documentation minimal with just prompt and very basic outcome.
+
+**Outcome**:
+- Created DEVELOPMENT.md with project generation history
+- Documented all prompts and outcomes
+- Added numbered cardinality to prompts (1-4)
+
+**Files Modified**:
+- `DEVELOPMENT.md` - Created development log
+
+---
+
+### 6. Backend Instructions Documentation
+**Prompt**: Please create an AI instruction document for backend with following information: [Java/Spring Boot specifications, Database, Security requirements]
+
+**Outcome**:
+- Created BACKEND_INSTRUCTIONS.md with Java/Spring Boot specifications
+- Documented OpenJDK 21, Spring Boot 3.5+, Hibernate 6.x
+- Added security requirements (OAuth 2.0, JWT)
+- Included AI development guidelines
+
+**Files Modified**:
+- `BACKEND_INSTRUCTIONS.md` - Created backend specifications
+
+---
+
+### 7. Architecture Documentation
+**Prompt**: Please create an AI instructions document for the overall architecture: [4-layer system architecture]
+
+**Outcome**:
+- Created ARCHITECTURE.md defining system architecture
+- Documented 4 layers: Frontend (SPA), Backend (REST API), Database, Message Queue
+- Added architecture diagram showing component relationships
+- Included deployment architecture with Docker
+
+**Files Modified**:
+- `ARCHITECTURE.md` - Created architecture documentation
+
+---
+
+### 8. AI Agents Entry Point
+**Prompt**: Please setup Agents.md file which points to architecture and backend instructions
+
+**Outcome**:
+- Created AGENTS.md as central navigation hub for AI agents
+- Documented all available documentation files with descriptions
+- Added AI agent workflow for feature development
+- Included quick reference table for task-to-document mapping
+
+**Files Modified**:
+- `AGENTS.md` - Created AI agents entry point documentation
