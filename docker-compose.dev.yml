@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  uknf-app-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    container_name: uknf-bootstrap-app-dev
+    restart: unless-stopped
+    environment:
+      - NODE_ENV=development
