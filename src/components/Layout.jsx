@@ -1,37 +1,60 @@
 import { Outlet, Link } from 'react-router-dom'
 import { useState } from 'react'
+import UKNFLogo from './UKNFLogo'
 
 function Layout() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
       {/* Top Navigation Bar */}
-      <nav className="bg-white border-b border-gray-200 fixed w-full z-30 top-0">
-        <div className="px-3 py-3 lg:px-5 lg:pl-3">
+      <nav className="bg-white border-b border-gray-300 w-full z-30 shadow-sm">
+        <div className="px-4 py-2">
           <div className="flex items-center justify-between">
-            <div className="flex items-center justify-start">
-              <button
-                onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                className="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                  <path clipRule="evenodd" fillRule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-                </svg>
-              </button>
-              <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap ml-2 text-blue-900">
-                UKNF System
+            <div className="flex items-center justify-start gap-4">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <UKNFLogo />
+                <button
+                  onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                  className="inline-flex items-center p-2 text-gray-700 hover:bg-gray-100 rounded"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </button>
+              </div>
+              <span className="text-base font-normal text-gray-700">
+                System Komunikacji z Podmiotami
               </span>
             </div>
-            <div className="flex items-center">
-              <div className="flex items-center ml-3">
-                <button className="flex text-sm bg-gray-200 rounded-full focus:ring-4 focus:ring-gray-300">
-                  <span className="sr-only">Open user menu</span>
-                  <div className="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white">
-                    <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                      <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd"></path>
-                    </svg>
-                  </div>
+            
+            <div className="flex items-center gap-6">
+              {/* Session Timer */}
+              <div className="flex items-center gap-2 text-sm">
+                <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <span className="text-gray-700">Koniec sesji za: <strong>12:46</strong></span>
+              </div>
+              
+              {/* Accessibility Controls */}
+              <div className="flex items-center gap-2">
+                <button className="text-gray-700 hover:text-gray-900 text-sm font-medium">A</button>
+                <button className="text-gray-700 hover:text-gray-900 text-base font-medium">A</button>
+                <button className="text-gray-700 hover:text-gray-900 text-lg font-medium">A</button>
+                <button className="p-1.5 hover:bg-gray-100 rounded">
+                  <svg className="w-5 h-5 text-gray-700" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+                  </svg>
+                </button>
+              </div>
+              
+              {/* User Info */}
+              <div className="flex items-center gap-2 text-sm">
+                <span className="text-gray-700">Jan Nowak | Użytkownik podmiotu</span>
+                <button className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-1.5 rounded text-sm">
+                  Wyloguj
                 </button>
               </div>
             </div>
@@ -39,86 +62,116 @@ function Layout() {
         </div>
       </nav>
 
-      {/* Sidebar */}
-      <aside
-        className={`fixed top-0 left-0 z-20 w-64 h-screen pt-20 transition-transform ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full'
-        } bg-white border-r border-gray-200`}
-      >
-        <div className="h-full px-3 pb-4 overflow-y-auto bg-white">
-          <ul className="space-y-2 font-medium">
-            <li>
-              <Link
-                to="/"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group bg-blue-50 border-l-4 border-blue-600"
-              >
-                <svg
-                  className="w-5 h-5 text-blue-600"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
-                </svg>
-                <span className="ml-3 text-blue-600 font-semibold">Pulpit</span>
-              </Link>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-                </svg>
-                <span className="ml-3">Biblioteka</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-                </svg>
-                <span className="ml-3">Wiadomości</span>
-              </a>
-            </li>
-            <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 group"
-              >
-                <svg
-                  className="w-5 h-5 text-gray-500"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd"></path>
-                </svg>
-                <span className="ml-3">Pomoc</span>
-              </a>
-            </li>
-          </ul>
+      {/* Breadcrumb Bar */}
+      <div className="bg-gray-200 border-b border-gray-300 w-full z-20">
+        <div className="px-4 py-2 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm text-gray-700">
+            <span>System: / Podmiot: <strong>Instytucja Testowa</strong></span>
+          </div>
+          <button className="flex items-center gap-1 bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-sm">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            Zmień
+          </button>
         </div>
-      </aside>
+      </div>
 
-      {/* Main Content */}
-      <div className={`p-4 ${isSidebarOpen ? 'ml-64' : 'ml-0'} mt-14 transition-all`}>
-        <Outlet />
+      {/* Content Wrapper with Sidebar */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Sidebar */}
+        {isSidebarOpen && (
+          <aside className="w-60 bg-gray-100 border-r border-gray-300 overflow-y-auto flex-shrink-0">
+            <div className="px-3 py-2">
+              <div className="mb-2 px-3 py-2 text-xs font-semibold text-gray-600 uppercase">
+                MENU
+              </div>
+              <ul className="space-y-1">
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
+                    </svg>
+                    <span className="text-sm">Biblioteka - repozytorium plików</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="text-sm">Wnioski o dostęp</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span className="text-sm">Sprawy</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                    </svg>
+                    <span className="text-sm">Sprawozdawczość</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm">Moje pytania</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/"
+                    className="flex items-center gap-3 px-3 py-2 text-gray-800 hover:bg-white rounded group"
+                  >
+                    <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                    </svg>
+                    <span className="text-sm">Baza wiedzy</span>
+                  </Link>
+                </li>
+              </ul>
+            </div>
+            
+            {/* Collapse Button */}
+            <div className="p-4">
+              <button
+                onClick={() => setIsSidebarOpen(false)}
+                className="w-full flex items-center justify-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-3 py-1.5 rounded text-sm"
+              >
+                Zwiń menu
+              </button>
+            </div>
+          </aside>
+        )}
+
+        {/* Main Content */}
+        <div className="flex-1 overflow-auto">
+          <Outlet />
+        </div>
       </div>
     </div>
   )

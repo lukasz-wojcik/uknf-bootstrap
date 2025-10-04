@@ -1,216 +1,203 @@
+import { useState } from 'react'
+
 function Pulpit() {
-  const activities = [
-    {
-      id: 1,
-      title: 'Nowy wniosek o dostęp do systemu',
-      description: 'Wniosek nr 2024/10/001 - Jan Kowalski',
-      date: '2024-10-04',
-      status: 'pending',
-      type: 'wniosek'
-    },
-    {
-      id: 2,
-      title: 'Aktualizacja dokumentów',
-      description: 'Zaktualizowano 5 dokumentów w bibliotece',
-      date: '2024-10-03',
-      status: 'completed',
-      type: 'document'
-    },
-    {
-      id: 3,
-      title: 'Nowa wiadomość',
-      description: 'Otrzymano wiadomość w sprawie sprawozdania kwartalnego',
-      date: '2024-10-03',
-      status: 'unread',
-      type: 'message'
-    }
+  const [activeTab, setActiveTab] = useState('pulpit')
+  const [searchTerm, setSearchTerm] = useState('')
+  const [currentPage, setCurrentPage] = useState(1)
+  const [itemsPerPage, setItemsPerPage] = useState(10)
+
+  const komunikaty = [
+    { id: 1, data: '2025-02-14', temat: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 2, data: '2025-03-21', temat: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat.' },
+    { id: 3, data: '2025-02-14', temat: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 4, data: '2025-03-21', temat: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat.' },
+    { id: 5, data: '2025-02-14', temat: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 6, data: '2025-03-21', temat: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat.' },
+    { id: 7, data: '2025-02-14', temat: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 8, data: '2025-03-21', temat: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat.' },
+    { id: 9, data: '2025-02-14', temat: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
+    { id: 10, data: '2025-03-21', temat: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisl ut aliquip ex ea commodo consequat.' },
   ]
 
-  const stats = [
-    {
-      title: 'Wnioski',
-      value: '12',
-      description: 'Aktywne wnioski',
-      icon: (
-        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-          <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path>
-        </svg>
-      ),
-      color: 'bg-blue-100 text-blue-600'
-    },
-    {
-      title: 'Dokumenty',
-      value: '48',
-      description: 'W bibliotece',
-      icon: (
-        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-        </svg>
-      ),
-      color: 'bg-green-100 text-green-600'
-    },
-    {
-      title: 'Wiadomości',
-      value: '7',
-      description: 'Nieprzeczytane',
-      icon: (
-        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-          <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-        </svg>
-      ),
-      color: 'bg-purple-100 text-purple-600'
-    },
-    {
-      title: 'Zadania',
-      value: '5',
-      description: 'Do wykonania',
-      icon: (
-        <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd"></path>
-        </svg>
-      ),
-      color: 'bg-orange-100 text-orange-600'
-    }
-  ]
+  const totalPages = Math.ceil(komunikaty.length / itemsPerPage)
 
-  const getStatusBadge = (status) => {
-    switch (status) {
-      case 'pending':
-        return <span className="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-800">Oczekujący</span>
-      case 'completed':
-        return <span className="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">Zakończony</span>
-      case 'unread':
-        return <span className="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">Nieprzeczytana</span>
-      default:
-        return null
+  const renderPagination = () => {
+    const pages = []
+    for (let i = 1; i <= totalPages; i++) {
+      pages.push(
+        <button
+          key={i}
+          onClick={() => setCurrentPage(i)}
+          className={`px-3 py-1 text-sm ${
+            currentPage === i
+              ? 'bg-gray-300 text-gray-900 font-semibold'
+              : 'bg-white text-gray-700 hover:bg-gray-100'
+          } border border-gray-300`}
+        >
+          {i}
+        </button>
+      )
     }
-  }
-
-  const getActivityIcon = (type) => {
-    switch (type) {
-      case 'wniosek':
-        return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
-            <svg className="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-              <path fillRule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd"></path>
-            </svg>
-          </div>
-        )
-      case 'document':
-        return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
-            <svg className="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-            </svg>
-          </div>
-        )
-      case 'message':
-        return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
-            <svg className="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-            </svg>
-          </div>
-        )
-      default:
-        return null
-    }
+    return pages
   }
 
   return (
-    <div className="space-y-6">
-      {/* Page Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900">Pulpit</h1>
-          <p className="mt-1 text-sm text-gray-500">Witaj w systemie UKNF</p>
-        </div>
-        <div className="flex items-center space-x-3">
-          <span className="text-sm text-gray-600">
-            {new Date().toLocaleDateString('pl-PL', { 
-              weekday: 'long', 
-              year: 'numeric', 
-              month: 'long', 
-              day: 'numeric' 
-            })}
-          </span>
-        </div>
-      </div>
-
-      {/* Statistics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {stats.map((stat, index) => (
-          <div key={index} className="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-sm font-medium text-gray-600">{stat.title}</p>
-                <p className="mt-2 text-3xl font-bold text-gray-900">{stat.value}</p>
-                <p className="mt-1 text-xs text-gray-500">{stat.description}</p>
-              </div>
-              <div className={`${stat.color} p-3 rounded-lg`}>
-                {stat.icon}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent Activity */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-gray-900">Ostatnia aktywność</h2>
-            <button className="text-sm text-blue-600 hover:text-blue-800 font-medium">
-              Zobacz wszystkie
+    <div className="bg-white">
+      {/* Tabs Navigation */}
+      <div className="border-b border-gray-300 bg-white">
+        <div className="px-6">
+          <div className="flex gap-1">
+            <button
+              onClick={() => setActiveTab('pulpit')}
+              className={`px-4 py-3 text-sm font-medium border-b-2 ${
+                activeTab === 'pulpit'
+                  ? 'border-gray-700 text-gray-900 bg-white'
+                  : 'border-transparent text-gray-600 hover:text-gray-900 bg-gray-50'
+              }`}
+            >
+              Pulpit użytkownika
+            </button>
+            <button
+              onClick={() => setActiveTab('wnioski')}
+              className={`px-4 py-3 text-sm font-medium border-b-2 relative ${
+                activeTab === 'wnioski'
+                  ? 'border-gray-700 text-gray-900 bg-white'
+                  : 'border-transparent text-gray-600 hover:text-gray-900 bg-gray-50'
+              }`}
+            >
+              Wnioski o dostęp
+              <button className="absolute -top-1 -right-1 w-5 h-5 bg-gray-400 hover:bg-gray-500 text-white text-xs rounded flex items-center justify-center">
+                ×
+              </button>
+            </button>
+            <button
+              onClick={() => setActiveTab('biblioteka')}
+              className={`px-4 py-3 text-sm font-medium border-b-2 relative ${
+                activeTab === 'biblioteka'
+                  ? 'border-gray-700 text-gray-900 bg-white'
+                  : 'border-transparent text-gray-600 hover:text-gray-900 bg-gray-50'
+              }`}
+            >
+              Biblioteka - repozytorium plików
+              <button className="absolute -top-1 -right-1 w-5 h-5 bg-gray-400 hover:bg-gray-500 text-white text-xs rounded flex items-center justify-center">
+                ×
+              </button>
             </button>
           </div>
         </div>
-        <div className="divide-y divide-gray-200">
-          {activities.map((activity) => (
-            <div key={activity.id} className="px-6 py-4 hover:bg-gray-50 transition-colors">
-              <div className="flex items-start space-x-4">
-                {getActivityIcon(activity.type)}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between">
-                    <p className="text-sm font-semibold text-gray-900">{activity.title}</p>
-                    {getStatusBadge(activity.status)}
-                  </div>
-                  <p className="mt-1 text-sm text-gray-600">{activity.description}</p>
-                  <p className="mt-1 text-xs text-gray-500">{activity.date}</p>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
 
-      {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">Szybkie akcje</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <button className="flex items-center justify-center px-4 py-3 border-2 border-blue-600 rounded-lg text-blue-600 hover:bg-blue-50 transition-colors font-medium">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path fillRule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clipRule="evenodd"></path>
-            </svg>
-            Nowy wniosek
-          </button>
-          <button className="flex items-center justify-center px-4 py-3 border-2 border-green-600 rounded-lg text-green-600 hover:bg-green-50 transition-colors font-medium">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM2 11a2 2 0 012-2h12a2 2 0 012 2v4a2 2 0 01-2 2H4a2 2 0 01-2-2v-4z"></path>
-            </svg>
-            Dodaj dokument
-          </button>
-          <button className="flex items-center justify-center px-4 py-3 border-2 border-purple-600 rounded-lg text-purple-600 hover:bg-purple-50 transition-colors font-medium">
-            <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"></path>
-              <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"></path>
-            </svg>
-            Wyślij wiadomość
-          </button>
+      {/* Main Content */}
+      <div className="px-6 py-6">
+        {/* Komunikaty Section */}
+        <div className="mb-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Komunikaty</h2>
+          
+          {/* Search Bar */}
+          <div className="mb-4">
+            <details className="bg-gray-50 border border-gray-300 rounded">
+              <summary className="px-4 py-2 cursor-pointer text-sm font-medium text-gray-700 hover:bg-gray-100">
+                Wyszukiwanie
+              </summary>
+              <div className="px-4 py-3 border-t border-gray-300">
+                <input
+                  type="text"
+                  placeholder="Szukaj..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+            </details>
+          </div>
+
+          {/* Data Table */}
+          <div className="border border-gray-300 rounded overflow-hidden">
+            <table className="w-full">
+              <thead className="bg-gray-100 border-b border-gray-300">
+                <tr>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    <button className="flex items-center gap-1 hover:text-gray-900">
+                      Data publikacji
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                      </svg>
+                    </button>
+                  </th>
+                  <th className="px-4 py-3 text-left text-sm font-medium text-gray-700">
+                    <button className="flex items-center gap-1 hover:text-gray-900">
+                      Temat
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4" />
+                      </svg>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {komunikaty.map((item, index) => (
+                  <tr key={item.id} className={index % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
+                    <td className="px-4 py-3 text-sm text-gray-900 whitespace-nowrap">
+                      {item.data}
+                    </td>
+                    <td className="px-4 py-3 text-sm text-gray-700">
+                      {item.temat}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          <div className="mt-4 flex items-center justify-between">
+            <div className="text-sm text-gray-600">
+              Showing 1 to 10 of 200 entries
+            </div>
+            <div className="flex items-center gap-1">
+              <button className="px-3 py-1 text-sm bg-white text-gray-700 hover:bg-gray-100 border border-gray-300">
+                «
+              </button>
+              <button className="px-3 py-1 text-sm bg-white text-gray-700 hover:bg-gray-100 border border-gray-300">
+                ‹
+              </button>
+              {renderPagination()}
+              <button className="px-3 py-1 text-sm bg-white text-gray-700 hover:bg-gray-100 border border-gray-300">
+                ›
+              </button>
+              <button className="px-3 py-1 text-sm bg-white text-gray-700 hover:bg-gray-100 border border-gray-300">
+                »
+              </button>
+            </div>
+            <div className="flex items-center gap-2">
+              <select
+                value={itemsPerPage}
+                onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                className="px-3 py-1 text-sm border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value={10}>10</option>
+                <option value={25}>25</option>
+                <option value={50}>50</option>
+                <option value={100}>100</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className="mt-4 flex gap-2">
+            <button className="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              Podgląd
+            </button>
+            <button className="flex items-center gap-2 px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded text-sm">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              </svg>
+              Eksportuj
+            </button>
+          </div>
         </div>
       </div>
     </div>
